@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>唐梅琳 · 个人简历网站</title>
+  <!-- Google Fonts + Tailwind CSS + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans SC', 'sans-serif'],
+          },
+          animation: {
+            fadeInUp: 'fadeInUp 0.8s ease-out forwards',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: 0, transform: 'translateY(25px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    /* 全局样式 */
+    body {
+      background: linear-gradient(145deg, #f8f0ff 0%, #fff4e8 50%, #ffffff 100%);
+      background-attachment: fixed;
+      scroll-behavior: smooth;
+    }
+    /* 固定毛玻璃导航栏 */
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.2s ease;
+    }
+    /* 通用卡片 */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+    }
+    /* 流光文字 */
+    .shimmer-text {
+      background: linear-gradient(120deg, #a855f7 20%, #f9a8d4 40%, #f472b6 60%, #a855f7 80%);
+      background-size: 200% auto;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: shimmerMove 3s linear infinite;
+      display: inline-block;
+    }
+    @keyframes shimmerMove {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+    /* 照片光晕 */
+    .photo-glow {
+      transition: box-shadow 0.3s ease;
+    }
+    .photo-glow:hover {
+      box-shadow: 0 0 0 4px rgba(168,85,247,0.3), 0 20px 30px -10px rgba(0,0,0,0.15);
+    }
+    .hero-section {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .gradient-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c084fc, #ec489a, #c084fc, transparent);
+    }
+    /* 时间线 */
+    .timeline-container {
+      position: relative;
+    }
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      left: 2.25rem;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #c084fc, #f0abfc, #ffffff);
+      opacity: 0.5;
+    }
+    @media (max-width: 768px) {
+      .timeline-container::before {
+        left: 1.25rem;
+      }
+    }
+    .timeline-dot {
+      width: 1rem;
+      height: 1rem;
+      background: #c084fc;
+      border-radius: 9999px;
+      box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.2);
+      transition: transform 0.2s;
+    }
+    .timeline-item:hover .timeline-dot {
+      transform: scale(1.2);
+      background: #ec489a;
+    }
+    /* 教育背景分隔 */
+    .edu-item {
+      border-bottom: 1px solid rgba(192, 132, 252, 0.2);
+    }
+    .edu-item:last-child {
+      border-bottom: none;
+    }
+    /* 图标云 */
+    .icon-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem 1.8rem;
+      padding: 1rem;
+    }
+    .icon-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1.2rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(6px);
+      border-radius: 60px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: default;
+      color: #6b7280;
+      font-size: 1rem;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+    .icon-item i {
+      font-size: 1.4rem;
+    }
+    .icon-item span {
+      font-size: 0.9rem;
+    }
+    .icon-item:hover {
+      transform: scale(1.08);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 12px 20px -8px rgba(0,0,0,0.15);
+      border-color: rgba(168,85,247,0.3);
+    }
+    /* 品牌色 */
+    .icon-item[data-brand="x-twitter"]:hover { color: #000000; background: #f5f5f5; }
+    .icon-item[data-brand="linkedin"]:hover { color: #0a66c2; background: #eef3ff; }
+    .icon-item[data-brand="facebook"]:hover { color: #1877f2; background: #eef3ff; }
+    .icon-item[data-brand="instagram"]:hover { color: #e4405f; background: #fff0f3; }
+    .icon-item[data-brand="youtube"]:hover { color: #ff0000; background: #ffe6e6; }
+    .icon-item[data-brand="medium"]:hover { color: #000000; background: #f5f5f5; }
+    .icon-item[data-brand="reddit"]:hover { color: #ff4500; background: #ffeae3; }
+    .icon-item[data-brand="telegram"]:hover { color: #26a5e4; background: #eaf7ff; }
+    .icon-item[data-brand="discord"]:hover { color: #5865f2; background: #eceeff; }
+    .icon-item[data-brand="whatsapp"]:hover { color: #25d366; background: #e6f9ef; }
+    .icon-item[data-brand="slack"]:hover { color: #4a154b; background: #f4eef7; }
+    .icon-item[data-brand="notion"]:hover { color: #000000; background: #f5f5f5; }
+    .icon-item[data-brand="meta-business"]:hover { color: #1877f2; background: #eef3ff; }
+    /* AI 品牌色 */
+    .icon-item[data-brand="chatgpt"]:hover { color: #10a37f; background: #e6f7f2; }
+    .icon-item[data-brand="qwen"]:hover { color: #5e2bff; background: #f0ebff; }
+    .icon-item[data-brand="doubao"]:hover { color: #ff8c42; background: #fff3e6; }
+    .icon-item[data-brand="deepseek"]:hover { color: #0066cc; background: #e6f2ff; }
+    .icon-item[data-brand="jimeng"]:hover { color: #e83e8c; background: #fef0f5; }
+    .icon-item[data-brand="grok"]:hover { color: #000000; background: #f5f5f5; }
+    .icon-item[data-brand="gemini"]:hover { color: #4285f4; background: #e8f0fe; }
+    .icon-item[data-brand="yuanbao"]:hover { color: #ff6b35; background: #fff0e8; }
+    .icon-item[data-brand="mita"]:hover { color: #2c7da0; background: #e6f4fa; }
+    .icon-item[data-brand="zhipu"]:hover { color: #a855f7; background: #f3e8ff; }
+    .icon-item[data-brand="kimi"]:hover { color: #ff4d4f; background: #ffe6e6; }
+    .icon-item[data-brand="siliconflow"]:hover { color: #00a6b4; background: #e6f7f9; }
+    .icon-item[data-brand="ollama"]:hover { color: #4c1d95; background: #efe9ff; }
+    .icon-item[data-brand="midjourney"]:hover { color: #c45b8a; background: #fef0f5; }
+    .icon-item[data-brand="dalle"]:hover { color: #e67e22; background: #fff2e6; }
+    /* 留言板表单 */
+    .input-field {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 1.5rem;
+      transition: all 0.2s ease;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #c084fc;
+      box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.2);
+      background: white;
+    }
+    .btn-submit {
+      background: linear-gradient(135deg, #a855f7, #ec489a);
+      transition: opacity 0.2s ease, transform 0.1s ease;
+    }
+    .btn-submit:hover {
+      opacity: 0.9;
+      transform: scale(0.98);
+    }
+    /* 移动端菜单 */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+    @media (min-width: 769px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="font-sans antialiased text-gray-800">
+
+  <!-- 固定毛玻璃导航栏 -->
+  <header class="glass-nav fixed top-0 left-0 w-full z-50 transition-all duration-300">
+    <div class="max-w-5xl mx-auto px-6 py-3 flex justify-between items-center">
+      <a href="#" class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">May Tang</a>
+      <nav class="nav-links flex space-x-6 text-gray-700 font-medium">
+        <a href="#home" class="hover:text-purple-600 transition">首页</a>
+        <a href="#strengths" class="hover:text-purple-600 transition">优势</a>
+        <a href="#education" class="hover:text-purple-600 transition">教育</a>
+        <a href="#experience" class="hover:text-purple-600 transition">经历</a>
+        <a href="#tools" class="hover:text-purple-600 transition">工具集</a>
+        <a href="#ai" class="hover:text-purple-600 transition">AI赋能</a>
+        <a href="#guestbook" class="hover:text-purple-600 transition">留言</a>
+      </nav>
+      <div class="mobile-menu-btn cursor-pointer text-gray-700" id="mobileMenuBtn">
+        <i class="fas fa-bars text-xl"></i>
+      </div>
+    </div>
+    <!-- 移动端下拉菜单 -->
+    <div id="mobileMenu" class="hidden bg-white/90 backdrop-blur-md border-t border-gray-100 flex flex-col items-center py-4 space-y-3">
+      <a href="#home" class="hover:text-purple-600">首页</a>
+      <a href="#strengths" class="hover:text-purple-600">优势</a>
+      <a href="#education" class="hover:text-purple-600">教育</a>
+      <a href="#experience" class="hover:text-purple-600">经历</a>
+      <a href="#tools" class="hover:text-purple-600">工具集</a>
+      <a href="#ai" class="hover:text-purple-600">AI赋能</a>
+      <a href="#guestbook" class="hover:text-purple-600">留言</a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12 md:py-20 pt-24 md:pt-28">
+    
+    <!-- ========= 英雄区 ========= -->
+    <section id="home" class="hero-section text-center space-y-6 md:space-y-8">
+      <div class="flex justify-center">
+        <div class="relative">
+          <div class="w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden shadow-xl ring-4 ring-white/60 photo-glow">
+            <img src="may.jpg" alt="唐梅琳" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400/20 to-pink-400/20 blur-xl -z-10"></div>
+        </div>
+      </div>
+      <div>
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight">
+          <span class="shimmer-text">唐梅琳</span>
+        </h1>
+      </div>
+      <div>
+        <p class="text-xl md:text-2xl text-gray-600 font-medium">海外社媒 · 品牌内容 · 跨文化增长策略</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-4 md:gap-6 text-gray-500 text-sm md:text-base">
+        <span class="flex items-center gap-1.5"><i class="fas fa-map-marker-alt"></i> 上海 / 远程</span>
+        <span class="flex items-center gap-1.5"><i class="fas fa-envelope"></i> 462845502@qq.com</span>
+        <span class="flex items-center gap-1.5"><i class="fas fa-phone-alt"></i> +86 18817235921</span>
+      </div>
+    </section>
+
+    <!-- ========= 核心优势 ========= -->
+    <section id="strengths" class="mt-20 md:mt-28">
+      <div class="gradient-divider w-full max-w-md mx-auto mb-8"></div>
+      <h2 class="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-12">核心优势</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="glass-card p-6 space-y-4"><div class="flex items-center gap-3 text-purple-600"><i class="fas fa-globe text-2xl"></i><h3 class="text-xl font-semibold">跨文化增长策略</h3></div><p class="text-gray-600">2013年 - 2019年澳洲墨尔本留学、工作经历，精通英语及海外主流社媒平台，深度理解多元文化语境，驱动海外市场高效增长。</p></div>
+        <div class="glass-card p-6 space-y-4"><div class="flex items-center gap-3 text-purple-600"><i class="fas fa-star text-2xl"></i><h3 class="text-xl font-semibold">品牌内容体系搭建</h3></div><p class="text-gray-600">擅长构建全球化品牌叙事，主导宣传手册、产品白皮书、公关稿等核心物料创作，支撑海外社媒传播与销售转化，提升品牌专业度与市场认知。</p></div>
+        <div class="glass-card p-6 space-y-4"><div class="flex items-center gap-3 text-purple-600"><i class="fas fa-share-alt text-2xl"></i><h3 class="text-xl font-semibold">海外社媒平台 & 社区运营</h3></div><p class="text-gray-600">擅长 0-1 矩阵搭建，包括 X, Facebook, Instagram, LinkedIn, YouTube, Telegram, Discord，本地化内容与用户增长。</p></div>
+        <div class="glass-card p-6 space-y-4"><div class="flex items-center gap-3 text-purple-600"><i class="fas fa-chart-line text-2xl"></i><h3 class="text-xl font-semibold">数据驱动 & 项目交付</h3></div><p class="text-gray-600">擅长跨部门协同与复杂项目落地，主导项目均实现按时高质量交付；通过数据洞察优化产品体验，推动核心功能使用率显著提升。</p></div>
+        <div class="glass-card p-6 space-y-4"><div class="flex items-center gap-3 text-purple-600"><i class="fas fa-network-wired text-2xl"></i><h3 class="text-xl font-semibold">互联网行业纵深经验</h3></div><p class="text-gray-600">6年互联网背景，覆盖 Web 3、金融外汇、SaaS 产品、B2B+B2C 全场景内容运营与增长实践。</p></div>
+      </div>
+    </section>
+
+    <!-- ========= 教育背景 ========= -->
+    <section id="education" class="mt-20 md:mt-28">
+      <h2 class="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-8">教育背景</h2>
+      <div class="glass-card p-6 md:p-8 space-y-6">
+        <div class="text-center"><p class="text-lg font-semibold text-gray-800">Deakin University 迪肯大学 · 墨尔本</p><p class="text-gray-600">本科 · 金融与会计 ｜ 2014.07 – 2016.11</p><p class="text-xs text-gray-500 mt-1">（已通过学信网认证）</p></div>
+        <div class="space-y-5">
+          <div class="edu-item pb-4"><h3 class="text-lg font-semibold text-purple-700 mb-1">专业职业评估</h3><p class="text-gray-700">持有 CA ANZ (Accountant) 及 CPA Australia (Auditor) Suitability Assessment，即，具备澳洲注册会计师/审计师准入资格。</p></div>
+          <div class="edu-item pb-4"><h3 class="text-lg font-semibold text-purple-700 mb-1">中英互译认证</h3><p class="text-gray-700">NAATI Certified Translator & Interpreter (Level 2)，即，NAATI 中英双语商务口译与笔译。</p></div>
+          <div class="edu-item pb-4"><h3 class="text-lg font-semibold text-purple-700 mb-1">语言能力认证</h3><p class="text-gray-700">PTE Academic （即，雅思机考版）综合与分项满分 (90/90)。</p></div>
+          <div><h3 class="text-lg font-semibold text-purple-700 mb-1">澳洲实习工作</h3><p class="text-gray-700">通过 Professional Year 课程项目培训并分配进入当地公司实习，转正留任，后因全球疫情影响选择归国。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========= 工作经历 ========= -->
+    <section id="experience" class="mt-20 md:mt-28">
+      <h2 class="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-8">工作经历</h2>
+      <div class="timeline-container relative pl-8 md:pl-12 space-y-8">
+        <!-- 1 -->
+        <div class="timeline-item relative"><div class="absolute left-[-1.75rem] top-1 md:left-[-2.5rem]"><div class="timeline-dot"></div></div><div class="glass-card p-6 md:p-8"><div class="flex flex-wrap justify-between items-start gap-2 mb-3"><div><h3 class="text-xl font-bold">市场 & 品牌内容负责人</h3><p class="text-purple-600">Zeal Group (UK) · 金融外汇 · 远程办公</p></div><span class="text-sm bg-white/70 px-3 py-1 rounded-full">2025.01 – 2026.03</span></div><ul class="space-y-2 mt-3 list-disc pl-5 text-gray-700"><li>带领 4–5 人团队，先后统筹东南亚与大中华区双市场内容战略，搭建本地化内容体系。</li><li>主导品牌公关稿、官方声明及行业观点文创作，在百度、搜狐等国内媒体渠道发布。</li><li>从 0-1 主导大陆品牌“百度百科”词条创建与上线，实现品牌搜索权重显著提升。</li><li>建立跨部门内容协作机制，确保对外信息统一、响应高效。</li></ul><div class="mt-4 pt-3 border-t border-purple-100/50 text-sm text-purple-600">🏷️ 核心能力： 区域市场战略 | 本地化运营 | 公关传播 | 百科词条构建 | 品牌管理 | 内容支持 | 跨部门协同</div></div></div>
+        <!-- 2 -->
+        <div class="timeline-item relative"><div class="absolute left-[-1.75rem] top-1 md:left-[-2.5rem]"><div class="timeline-dot"></div></div><div class="glass-card p-6 md:p-8"><div class="flex flex-wrap justify-between items-start gap-2 mb-3"><div><h3 class="text-xl font-bold">海外社媒运营负责人</h3><p class="text-purple-600">WikiGlobal 子业务 WikiTrade · 金融外汇 · 上海</p></div><span class="text-sm bg-white/70 px-3 py-1 rounded-full">2024.01 – 2024.12</span></div><ul class="space-y-2 mt-3 list-disc pl-5 text-gray-700"><li>组建并带领 3 人团队，从 0-1 搭建品牌全球社媒矩阵（X, Facebook, Instagram, LinkedIn, YouTube），单条推文最高曝光 2.8万+，互动率超 1.9%。</li><li>从 0-1 规划并落地海外私域社群体系（Telegram & Discord），建立用户反馈闭环，推动产品迭代。</li><li>构建“内容 - 产品”双向反馈闭环，协助产品团队验证新功能市场反应。</li><li>建立集团内部品牌联动机制，实现集团整体海外声量最大化。</li></ul><div class="mt-4 pt-3 border-t border-purple-100/50 text-sm text-purple-600">🏷️ 核心能力： 海外社媒矩阵搭建 | 私域社群运营 | 产品驱动运营 | 集团品牌资源联动 | 内容支持 | 跨部门协同</div></div></div>
+        <!-- 3 -->
+        <div class="timeline-item relative"><div class="absolute left-[-1.75rem] top-1 md:left-[-2.5rem]"><div class="timeline-dot"></div></div><div class="glass-card p-6 md:p-8"><div class="flex flex-wrap justify-between items-start gap-2 mb-3"><div><h3 class="text-xl font-bold">区块链项目运营负责人</h3><p class="text-purple-600">Hpool · Web 3 · 上海</p></div><span class="text-sm bg-white/70 px-3 py-1 rounded-full">2022.02 – 2023.12</span></div><ul class="space-y-2 mt-3 list-disc pl-5 text-gray-700"><li>全程参与多个头部 Web3 项目（Chia、Aptos、Aleo、IronFish），从 Testnet 到 Mainnet 的孵化落地。</li><li>撰写项目介绍、AMA 公告及 Twitter Space 宣传物料，提升活动参与率与互动效果。</li><li>协助海外社媒矩阵内容运营，确保社区用户及时获取项目最新进展。</li><li>参与新加坡 Web3 峰会等国际活动，深化本地关系网络。</li></ul><div class="mt-4 pt-3 border-t border-purple-100/50 text-sm text-purple-600">🏷️ 核心能力： Web3 项目运营 | 跨境商务拓展 | 客户关系维护 | 内容支持 | 跨部门协同</div></div></div>
+        <!-- 4 -->
+        <div class="timeline-item relative"><div class="absolute left-[-1.75rem] top-1 md:left-[-2.5rem]"><div class="timeline-dot"></div></div><div class="glass-card p-6 md:p-8"><div class="flex flex-wrap justify-between items-start gap-2 mb-3"><div><h3 class="text-xl font-bold">SaaS 产品实施顾问</h3><p class="text-purple-600">校校 SaaS 系统 · 互联网 SaaS · 上海</p></div><span class="text-sm bg-white/70 px-3 py-1 rounded-full">2020.12 – 2022.01</span></div><ul class="space-y-2 mt-3 list-disc pl-5 text-gray-700"><li>构建标准化实施交付体系（SOP），显著缩短客户上线周期。</li><li>提供全链路顾问式支持，提升客户满意度。</li><li>驱动产品迭代与转化闭环，推动产品针对性迭代。</li></ul><div class="mt-4 pt-3 border-t border-purple-100/50 text-sm text-purple-600">🏷️ 核心能力： 标准化 SOP 制定 | 顾问式客户成功 | 内容支持 | 跨部门协同</div></div></div>
+      </div>
+    </section>
+
+    <!-- ========= 工具集 ========= -->
+    <section id="tools" class="mt-20 md:mt-28">
+      <h2 class="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-8">工具集</h2>
+      <div class="icon-cloud">
+        <div class="icon-item" data-brand="x-twitter"><i class="fab fa-twitter"></i><span>X/Twitter</span></div>
+        <div class="icon-item" data-brand="linkedin"><i class="fab fa-linkedin-in"></i><span>LinkedIn</span></div>
+        <div class="icon-item" data-brand="facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></div>
+        <div class="icon-item" data-brand="instagram"><i class="fab fa-instagram"></i><span>Instagram</span></div>
+        <div class="icon-item" data-brand="youtube"><i class="fab fa-youtube"></i><span>YouTube</span></div>
+        <div class="icon-item" data-brand="medium"><i class="fab fa-medium"></i><span>Medium</span></div>
+        <div class="icon-item" data-brand="reddit"><i class="fab fa-reddit-alien"></i><span>Reddit</span></div>
+        <div class="icon-item" data-brand="telegram"><i class="fab fa-telegram"></i><span>Telegram</span></div>
+        <div class="icon-item" data-brand="discord"><i class="fab fa-discord"></i><span>Discord</span></div>
+        <div class="icon-item" data-brand="whatsapp"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></div>
+        <div class="icon-item" data-brand="slack"><i class="fab fa-slack"></i><span>Slack</span></div>
+        <div class="icon-item" data-brand="notion"><i class="fas fa-book-open"></i><span>Notion</span></div>
+        <div class="icon-item" data-brand="meta-business"><i class="fab fa-facebook-square"></i><span>Meta Suite</span></div>
+      </div>
+    </section>
+
+    <!-- ========= AI 赋能 ========= -->
+    <section id="ai" class="mt-20 md:mt-28">
+      <h2 class="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-8">AI 赋能</h2>
+      <div class="icon-cloud">
+        <div class="icon-item" data-brand="chatgpt"><i class="fas fa-comment-dots"></i><span>ChatGPT</span></div>
+        <div class="icon-item" data-brand="qwen"><i class="fas fa-language"></i><span>Qwen</span></div>
+        <div class="icon-item" data-brand="doubao"><i class="fas fa-cookie-bite"></i><span>豆包</span></div>
+        <div class="icon-item" data-brand="deepseek"><i class="fas fa-search"></i><span>Deepseek</span></div>
+        <div class="icon-item" data-brand="jimeng"><i class="fas fa-video"></i><span>即梦</span></div>
+        <div class="icon-item" data-brand="grok"><i class="fas fa-rocket"></i><span>Grok</span></div>
+        <div class="icon-item" data-brand="gemini"><i class="fas fa-star-of-life"></i><span>Gemini</span></div>
+        <div class="icon-item" data-brand="yuanbao"><i class="fas fa-coins"></i><span>元宝</span></div>
+        <div class="icon-item" data-brand="mita"><i class="fas fa-pen-fancy"></i><span>秘塔</span></div>
+        <div class="icon-item" data-brand="zhipu"><i class="fas fa-brain"></i><span>智谱清言</span></div>
+        <div class="icon-item" data-brand="kimi"><i class="fas fa-heart"></i><span>Kimi</span></div>
+        <div class="icon-item" data-brand="siliconflow"><i class="fas fa-microchip"></i><span>硅基流动</span></div>
+        <div class="icon-item" data-brand="ollama"><i class="fas fa-robot"></i><span>Ollama</span></div>
+        <div class="icon-item" data-brand="midjourney"><i class="fas fa-palette"></i><span>Midjourney</span></div>
+        <div class="icon-item" data-brand="dalle"><i class="fas fa-image"></i><span>DALL·E 3</span></div>
+      </div>
+    </section>
+
+    <!-- ========= 结语 ========= -->
+    <div class="mt-20 md:mt-28">
+      <div class="gradient-divider w-full max-w-md mx-auto mb-8"></div>
+      <div class="text-center">
+        <span class="shimmer-text text-2xl md:text-3xl font-bold">保持好奇，持续学习，无限进步</span>
+      </div>
+    </div>
+
+    <!-- ========= 留言板 ========= -->
+    <section id="guestbook" class="mt-20 md:mt-28">
+      <h2 class="text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-8">留言板</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- 表单 -->
+        <div class="glass-card p-6 md:p-8">
+          <h3 class="text-xl font-semibold mb-5 flex items-center gap-2"><i class="fas fa-pen-alt"></i> 留下你的足迹</h3>
+          <form id="guestbookForm">
+            <div class="mb-4"><label class="block text-sm font-medium mb-1">昵称 *</label><input type="text" id="gbName" required class="input-field w-full px-5 py-3 rounded-full"></div>
+            <div class="mb-4"><label class="block text-sm font-medium mb-1">邮箱</label><input type="email" id="gbEmail" class="input-field w-full px-5 py-3 rounded-full"></div>
+            <div class="mb-6"><label class="block text-sm font-medium mb-1">留言 *</label><textarea id="gbMessage" rows="3" required class="input-field w-full px-5 py-3 rounded-2xl resize-none"></textarea></div>
+            <button type="submit" class="btn-submit w-full text-white font-medium py-3 rounded-full shadow-lg">提交留言</button>
+          </form>
+          <p class="text-xs text-gray-400 mt-4 text-center">留言将保存在浏览器中，刷新页面不丢失</p>
+        </div>
+        <!-- 留言列表 -->
+        <div class="glass-card p-6 md:p-8">
+          <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-semibold">访客留言</h3><span id="messageCount" class="text-sm bg-white/50 px-3 py-1 rounded-full">0 条</span></div>
+          <div id="messageList" class="space-y-4 max-h-[400px] overflow-y-auto pr-1">
+            <div class="text-center text-gray-400 py-10">✨ 暂无留言，成为第一个留言的人吧～</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="mt-20 border-t border-white/40 py-6 text-center text-gray-500 text-sm">
+      <div>© 2026 May Tang</div>
+    </footer>
+
+  </main>
+
+  <script>
+    // 留言板逻辑 (localStorage)
+    let messages = JSON.parse(localStorage.getItem('guestbook_messages') || '[]');
+    const messageListDiv = document.getElementById('messageList');
+    const messageCountSpan = document.getElementById('messageCount');
+    const form = document.getElementById('guestbookForm');
+
+    function formatDate() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    }
+
+    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+    function renderMessages() {
+      if (!messageListDiv) return;
+      if (messages.length === 0) {
+        messageListDiv.innerHTML = `<div class="text-center text-gray-400 py-10">✨ 暂无留言，成为第一个留言的人吧～</div>`;
+        messageCountSpan.innerText = '0 条';
+        return;
+      }
+      messageCountSpan.innerText = `${messages.length} 条`;
+      const sorted = [...messages].reverse();
+      messageListDiv.innerHTML = sorted.map(msg => `
+        <div class="bg-white/60 rounded-2xl p-4 shadow-sm border border-white/40">
+          <div class="flex justify-between items-start mb-2">
+            <div class="font-semibold flex items-center gap-2"><span class="w-7 h-7 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 flex items-center justify-center text-white text-xs">${(msg.name.charAt(0) || 'U').toUpperCase()}</span>${escapeHtml(msg.name)}</div>
+            <span class="text-xs text-gray-400">${escapeHtml(msg.date)}</span>
+          </div>
+          <p class="text-gray-700">${escapeHtml(msg.content).replace(/\n/g, '<br>')}</p>
+          ${msg.email ? `<div class="text-xs text-gray-400 mt-2">📧 邮箱已留下</div>` : ''}
+        </div>
+      `).join('');
+    }
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('gbName').value.trim();
+      const email = document.getElementById('gbEmail').value.trim();
+      const content = document.getElementById('gbMessage').value.trim();
+      if (!name || !content) return alert('请填写昵称和留言内容');
+      const newMsg = { id: Date.now(), name, email, content, date: formatDate() };
+      messages.unshift(newMsg);
+      localStorage.setItem('guestbook_messages', JSON.stringify(messages));
+      renderMessages();
+      form.reset();
+    });
+    renderMessages();
+
+    // 移动端菜单
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    document.querySelectorAll('#mobileMenu a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+    // 照片占位
+    const img = document.querySelector('img');
+    if (img) img.onerror = () => { img.src = 'https://placehold.co/400x400/e2e8f0/9ca3af?text=May+Tang'; img.classList.add('object-contain', 'bg-gray-100'); };
+  </script>
+</body>
+</html> 
